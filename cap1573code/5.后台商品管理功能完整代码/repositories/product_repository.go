@@ -84,24 +84,40 @@ func (p *ProductManager) Delete(productID int64) bool {
 
 // 商品的更新
 func (p *ProductManager) Update(product *datamodels.Product) error {
-	//1.判断连接是否存在
 	if err := p.Conn(); err != nil {
 		return err
 	}
-
-	sql := "Update product set productName=?,productNum=?,productImage=?,productUrl=? where ID=" + strconv.FormatInt(product.ID, 10)
-
-	stmt, err := p.mysqlConn.Prepare(sql)
+	sql := `update product set productName=? ,productNum=?,productImage=?,productUrl=? where ID=` + strconv.FormatInt(product.ID, 10)
+	statement, err := p.mysqlConn.Prepare(sql)
 	if err != nil {
 		return err
 	}
-
-	_, err = stmt.Exec(product.ProductName, product.ProductNum, product.ProductImage, product.ProductUrl)
+	_, err = statement.Exec(product.ProductName, product.ProductNum, product.ProductImage, product.ProductUrl)
 	if err != nil {
 		return err
 	}
 	return nil
 }
+
+//func (p *ProductManager) Update(product *datamodels.Product) error {
+//	//1.判断连接是否存在
+//	if err := p.Conn(); err != nil {
+//		return err
+//	}
+//
+//	sql := "Update product set productName=?,productNum=?,productImage=?,productUrl=? where ID=" + strconv.FormatInt(product.ID, 10)
+//
+//	stmt, err := p.mysqlConn.Prepare(sql)
+//	if err != nil {
+//		return err
+//	}
+//
+//	_, err = stmt.Exec(product.ProductName, product.ProductNum, product.ProductImage, product.ProductUrl)
+//	if err != nil {
+//		return err
+//	}
+//	return nil
+//}
 
 // 根据商品ID查询商品
 func (p *ProductManager) SelectByKey(productID int64) (productResult *datamodels.Product, err error) {

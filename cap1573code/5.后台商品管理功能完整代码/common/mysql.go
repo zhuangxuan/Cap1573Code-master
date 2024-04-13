@@ -5,20 +5,20 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-//创建mysql 连接
+// 创建mysql 连接
 func NewMysqlConn() (db *sql.DB, err error) {
-	db, err = sql.Open("mysql", "root:imooc@tcp(127.0.0.1:3306)/imooc?charset=utf8")
+	db, err = sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/imooc?charset=utf8")
 	return
 }
 
-//获取返回值，获取一条
-func GetResultRow(rows *sql.Rows) map[string]string{
+// 获取返回值，获取一条
+func GetResultRow(rows *sql.Rows) map[string]string {
 	columns, _ := rows.Columns()
 	scanArgs := make([]interface{}, len(columns))
 	values := make([]interface{}, len(columns))
 	for j := range values {
 		scanArgs[j] = &values[j]
-	}	
+	}
 	record := make(map[string]string)
 	for rows.Next() {
 		//将行数据保存到record字典
@@ -33,7 +33,7 @@ func GetResultRow(rows *sql.Rows) map[string]string{
 	return record
 }
 
-//获取所有
+// 获取所有
 func GetResultRows(rows *sql.Rows) map[int]map[string]string {
 	//返回所有列
 	columns, _ := rows.Columns()
@@ -64,4 +64,3 @@ func GetResultRows(rows *sql.Rows) map[int]map[string]string {
 	}
 	return result
 }
-
