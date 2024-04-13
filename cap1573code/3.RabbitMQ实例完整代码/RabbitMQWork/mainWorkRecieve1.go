@@ -4,6 +4,6 @@ import "rabbit/RabbitMQ"
 
 func main() {
 
-	rabbitmq := RabbitMQ.NewRabbitMQSimple("test")
+	rabbitmq := RabbitMQ.NewRabbitMQSimple("imoocSimple")
 	rabbitmq.ConsumeSimple()
 }
