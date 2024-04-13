@@ -1,10 +1,10 @@
 package main
 
 import (
-	"rabbitmq/RabbitMQ"
+	"fmt"
+	RabbitMQ "rabbit/RabbitMQ"
 	"strconv"
 	"time"
-	"fmt"
 )
 
 func main() {

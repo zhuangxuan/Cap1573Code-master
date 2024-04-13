@@ -1,8 +1,8 @@
 package main
 
-import "rabbitmq/RabbitMQ"
+import "rabbit/RabbitMQ"
 
-func main()  {
-	imoocOne:=RabbitMQ.NewRabbitMQRouting("exImooc","imooc_two")
+func main() {
+	imoocOne := RabbitMQ.NewRabbitMQRouting("exImooc", "imooc_two")
 	imoocOne.RecieveRouting()
 }

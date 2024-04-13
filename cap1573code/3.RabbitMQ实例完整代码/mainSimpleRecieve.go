@@ -1,9 +1,12 @@
 package main
 
-import "rabbitmq/RabbitMQ"
+import "rabbit/RabbitMQ"
 
 func main() {
-	rabbitmq := RabbitMQ.NewRabbitMQSimple("" +
-		"imoocSimple")
+	//rabbitmq := RabbitMQ.NewRabbitMQSimple("" +
+	//	"imoocSimple")
+	//rabbitmq.ConsumeSimple()
+
+	rabbitmq := RabbitMQ.NewRabbitMQSimple("test_client1")
 	rabbitmq.ConsumeSimple()
 }

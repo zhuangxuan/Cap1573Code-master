@@ -1,6 +1,6 @@
 package main
 
-import "rabbitmq/RabbitMQ"
+import "rabbit/RabbitMQ"
 
 func main() {
 	rabbitmq := RabbitMQ.NewRabbitMQPubSub("" +

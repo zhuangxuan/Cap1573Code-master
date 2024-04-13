@@ -2,17 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/streadway/amqp"
 	"log"
 	"time"
+
+	"github.com/rabbitmq/amqp091-go"
 )
 
-//声明变量
-//rabbitmq 连接
-var conn *amqp.Connection
+// 声明变量
+// rabbitmq 连接
+var conn *amqp091.Connection
 
-//rabbitmq channel
-var channel *amqp.Channel
+// rabbitmq channel
+var channel *amqp091.Channel
 var count = 0
 
 const (
@@ -22,7 +23,7 @@ const (
 	mqurl     = "amqp://guest:guest@127.0.0.1:5673"
 )
 
-//错误处理函数
+// 错误处理函数
 func failOnErr(err error, msg string) {
 	if err != nil {
 		log.Fatalf("%s:%s", msg, err)
@@ -30,18 +31,18 @@ func failOnErr(err error, msg string) {
 	}
 }
 
-//rabbitmq 连接函数
+// rabbitmq 连接函数
 func Connect() {
 	var err error
 	//连接rabbitmq
-	conn, err = amqp.Dial(mqurl)
+	conn, err = amqp091.Dial(mqurl)
 	failOnErr(err, "failed to connect")
 	//获取channel
 	channel, err = conn.Channel()
 	failOnErr(err, "failed to open a channel")
 }
 
-//关闭rabbitmq连接
+// 关闭rabbitmq连接
 func close() {
 	//1.关闭channel
 	channel.Close()
@@ -49,7 +50,7 @@ func close() {
 	conn.Close()
 }
 
-//消息生产
+// 消息生产
 func push() {
 	//1.判断是否存在channel
 	if channel == nil {
@@ -75,13 +76,13 @@ func push() {
 
 	//5.生产消息
 	channel.Publish(exchange, q.Name, false,
-		false, amqp.Publishing{
+		false, amqp091.Publishing{
 			ContentType: "text/plain",
 			Body:        []byte(message),
 		})
 }
 
-//消费端
+// 消费端
 func receive() {
 	//1.判断channel 是否存在
 	if channel == nil {
@@ -113,7 +114,7 @@ func receive() {
 		for d := range msg {
 			//相同效果，把[]byte类型转化为字符串类型
 			//s := queue.BytesToString(&d.Body)
-                        s := string(d.Body)
+			s := string(d.Body)
 			count++
 			fmt.Println("接收信息是%s-- %d\n", s, count)
 		}
